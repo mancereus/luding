@@ -1,8 +1,6 @@
-# Polymer 2 Starter Kit with Webpack
+# luding.org polymer web app
 ## Overview
-This template is a proof of concept using [webpack](https://webpack.js.org/) to build the [Polymer 2 Starter Kit](https://github.com/PolymerElements/polymer-starter-kit/tree/2.0-preview).
-It will demonstrate the use of the [polymer-webpack-loader](https://github.com/webpack-contrib/polymer-webpack-loader) and [webpack lazy loading](https://webpack.js.org/guides/lazy-loading/).
-
+mini test for polymer spa 
 ## Get Started
 Install:
 ```
