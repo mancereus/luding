@@ -9,29 +9,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-view1">
   <template>
     <style include="shared-styles">
-      :host {
+       :host {
         display: block;
 
         padding: 10px;
       }
-    </style>
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>View One</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
+      iron-list {
+        height: 100vh;
+        /* don't use % values unless the parent element is sized. */
+      }
+    </style>
+    <div class="autocomplete-wrapper">
+      <paper-input id="search" label="Suche"></paper-input>
+      <paper-autocomplete-suggestions for="search" source="[[autocompletes]]"></paper-autocomplete-suggestions>
     </div>
+    <iron-list items="[[items]]">
+      <template>
+          <paper-card heading="[[item.name]]" image="http://placehold.it/150x50/FFC107/000000" alt="[[item.name]]">
+            <div class="card-content">
+              [[item.details]]
+            </div>
+          </paper-card>
+      </template>
+    </iron-list>
   </template>
 
   <script>
     class MyView1 extends Polymer.Element {
       static get is() { return 'my-view1'; }
+      static get properties() {
+        return {
+          autocompletes: {
+            type: Array,
+            value: () => [{ text: "Scotland Yard" }]
+          },
+          items: {
+            type: Array,
+            value: () => [
+              { name: "Scotland Yard", details:"2-5 Spieler, Dauer: 90min, 1990", publisher: "Ravensburger" },
+              { name: "Mister X", details:"2-4 Spieler, Dauer: 30min, 2012", publisher: "Ravensburger" }
+            ]
+          }
+
+        }
+
+      }
     }
 
     window.customElements.define(MyView1.is, MyView1);
