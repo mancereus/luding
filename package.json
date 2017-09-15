@@ -15,13 +15,14 @@
     "lint": "npm run lint:javascript",
     "build": "webpack",
     "prod": "node --inspect=5858 index.js",
-    "dev": "polymer serve",
+    "dev": "webpack-dev-server --hot",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   },
   "dependencies": {
     "express": "^4.15.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "webpack-dev-server": "^2.8.2"
   }
 }
