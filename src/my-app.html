@@ -73,11 +73,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer">
-        <app-toolbar>Menu</app-toolbar>
+        <app-toolbar>Luding.org</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href$="[[rootPath]]view1">Suche</a>
-          <a name="view2" href$="[[rootPath]]view2">Verlag</a>
-          <a name="view3" href$="[[rootPath]]view3">Author</a>
+          <a name="view1" href$="[[rootPath]]view1">Spiele</a>
+          <a name="view2" href$="[[rootPath]]view2">Verlage</a>
+          <a name="view3" href$="[[rootPath]]view3">Autoren</a>
+          <a name="view3" href$="[[rootPath]]view3">Designer</a>
+          <hr>
+          <a name="view3" href$="[[rootPath]]view3">Sammlung</a>
+          <a name="view3" href$="[[rootPath]]view3">Settings</a>
         </iron-selector>
       </app-drawer>
 
