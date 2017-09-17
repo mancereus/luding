@@ -16,7 +16,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(6);
 
-__webpack_require__(90);
+__webpack_require__(98);
 
 var RegisterHtmlTemplate = __webpack_require__(2);
 
@@ -45,7 +45,7 @@ window.customElements.define(MyView2.is, MyView2);
 
 /***/ }),
 
-/***/ 90:
+/***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

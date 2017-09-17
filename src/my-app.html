@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="my-app">
   <template>
     <style>
-      :host {
+       :host {
         --app-primary-color: #3D2814;
         --app-secondary-color: #FF3C3C;
 
@@ -64,11 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="[[rootPath]]:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
 
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
@@ -97,11 +93,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </app-toolbar>
         </app-header>
 
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
+        <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
           <my-view1 name="view1"></my-view1>
           <my-view2 name="view2"></my-view2>
           <my-view3 name="view3"></my-view3>
@@ -112,6 +104,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
+
     class MyApp extends Polymer.Element {
 
       static get is() { return 'my-app'; }
@@ -132,16 +125,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           lazyPages: {
             type: Object,
             value: {
-              view1: function() {
+              view1: function () {
                 import(/* webpackChunkName: "my-view1" */ './my-view1.html');
               },
-              view2: function() {
+              view2: function () {
                 import(/* webpackChunkName: "my-view2" */ './my-view2.html');
               },
-              view3: function() {
+              view3: function () {
                 import(/* webpackChunkName: "my-view3" */ './my-view3.html');
               },
-              view404: function() {
+              view404: function () {
                 import(/* webpackChunkName: "my-view404" */ './my-view404.html');
               }
             }
@@ -177,11 +170,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _pageChanged(page) {
-        if(this.lazyPages[page]){
-          this.lazyPages[page]();       
+        if (this.lazyPages[page]) {
+          this.lazyPages[page]();
         } else {
           this._showPage404();
-        }        
+        }
       }
 
       _showPage404() {

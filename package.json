@@ -21,8 +21,10 @@
     "test:integration": "polymer build # test that psk builds without error with the CLI"
   },
   "dependencies": {
+    "apollo-client": "^1.9.2",
     "express": "^4.15.4",
     "path": "^0.12.7",
+    "polymer-apollo": "^2.0.0-rc.6",
     "webpack-dev-server": "^2.8.2"
   }
 }
