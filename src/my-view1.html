@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-view1">
@@ -38,11 +39,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
       </paper-input>
     </div>
-    <iron-list items="[[filterItems(filterstr)]]">
+    <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse"
+      content-type="application/json" handle-as="json" method="POST"
+      body=[[body]]
+      auto ></iron-ajax>
+    <iron-list items="[[data]]" as="item">
       <template>
-        <paper-card heading="[[item.name]]" alt="[[item.name]]">
+        <paper-card heading="[[item.gamename]]" alt="[[item.gamename]]">
           <div class="card-content">
-            [[item.author]], [[item.publisher]], [[item.year]]
+            [[item.authorname]], [[item.publishername]], [[item.year]]
             <paper-icon-button right icon="favorite"></paper-icon-button>
             <paper-icon-button icon="star"></paper-icon-button>
           </div>
@@ -52,11 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    import { PolymerApolloMixin } from 'polymer-apollo';
-    import { apolloClient, } from './config.js'
-    import gql from 'graphql-tag';
-
-    class MyView1 extends PolymerApolloMixin({ apolloClient }, Polymer.Element) {
+    class MyView1 extends Polymer.Element {
       static get is() { return 'my-view1'; }
 
       static get properties() {
@@ -64,26 +65,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           filterstr: String,
           data: {
             type: Array,
-
-          }
+            notify: true
+            
+          },
+          body: {
+            type: Object,
+            value: { 
+              query:`query {games(gamename:"${this.filterstr}") { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}` } }
 
         }
 
       }
-
-      get apollo() {
-        return {
-          // Simple query that will update the 'hello' polymer property
-          hello: gql`{hello}`,
-        };
-      }
-      filterItems(filterstr) {
-        if (!filterstr)
-          return this.data
-        this.data = apollo()
-        return this.data.filter(function (item) {
-          return item.name.indexOf(filterstr) >= 0;
-        });
+      handleResponse(event) {
+        this.set('data', event.detail.response.data.games)
+        // this.notifyPath('data')
       }
     }
 

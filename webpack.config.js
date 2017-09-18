@@ -4,7 +4,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/my-app.html',
+  entry: ['./src/my-app.html'],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'public/dist'),
@@ -23,7 +23,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['env'],
+              presets: ['env' ],
               plugins: ['syntax-dynamic-import']
             }
           },

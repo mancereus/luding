@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 88:
+/***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16,7 +16,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 __webpack_require__(6);
 
-__webpack_require__(98);
+__webpack_require__(91);
 
 var RegisterHtmlTemplate = __webpack_require__(2);
 
@@ -45,7 +45,7 @@ window.customElements.define(MyView3.is, MyView3);
 
 /***/ }),
 
-/***/ 98:
+/***/ 91:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
