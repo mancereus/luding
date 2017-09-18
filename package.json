@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "npm run lint:javascript",
     "build": "webpack",
-    "watch": "webpack --watch",
+    "watch": "webpack --watch ",
     "prod": "node --inspect=5858 index.js",
     "dev": "webpack-dev-server --hot",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
