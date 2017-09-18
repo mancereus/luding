@@ -39,10 +39,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
       </paper-input>
     </div>
-    <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse"
-      content-type="application/json" handle-as="json" method="POST"
-      body=[[body]]
-      auto ></iron-ajax>
+    <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
+      method="POST" body=[[body]] auto></iron-ajax>
     <iron-list items="[[data]]" as="item">
       <template>
         <paper-card heading="[[item.gamename]]" alt="[[item.gamename]]">
@@ -66,15 +64,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           data: {
             type: Array,
             notify: true
-            
+
           },
           body: {
             type: Object,
-            value: { 
-              query:`query {games(gamename:"${this.filterstr}") { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}` } }
-
+            computed: 'getBody(filterstr)'
         }
 
+      }
+
+      }
+      getBody(filterStr) {
+        if (filterStr.length > 3)
+        return {
+          query: `query {games(gamename:"${filterStr}") { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}`
+        }
       }
       handleResponse(event) {
         this.set('data', event.detail.response.data.games)
