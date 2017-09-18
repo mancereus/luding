@@ -1,5 +1,7 @@
 {
-  "name": "luding-spa",
+  "name": "@mancereus/luding-spa",
+  "version": "0.2.0",
+  "author": "Matthias Schmitt",  
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
@@ -14,6 +16,7 @@
   "scripts": {
     "lint": "npm run lint:javascript",
     "build": "webpack",
+    "watch": "webpack --watch",
     "prod": "node --inspect=5858 index.js",
     "dev": "webpack-dev-server --hot",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",

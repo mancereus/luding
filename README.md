@@ -15,3 +15,9 @@ Serve the App:
 ```
 polymer serve
 ```
+
+### Tasks
+
+* app-route
+* Splash screen
+* iron-ajax for graphql

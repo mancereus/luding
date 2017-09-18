@@ -53,11 +53,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     import { PolymerApolloMixin } from 'polymer-apollo';
-    import { apolloClient } from './config.js'
+    import { apolloClient, } from './config.js'
     import gql from 'graphql-tag';
 
     class MyView1 extends PolymerApolloMixin({ apolloClient }, Polymer.Element) {
       static get is() { return 'my-view1'; }
+
       static get properties() {
         return {
           filterstr: String,
