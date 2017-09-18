@@ -19,7 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="authors-view">
+<dom-module id="authors-list">
   <template>
     <style include="shared-styles">
        :host {
@@ -56,7 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script>
     class AuthorsView extends Polymer.Element {
-      static get is() { return 'authors-view'; }
+      static get is() { return 'authors-list'; }
 
       static get properties() {
         return {
@@ -68,7 +68,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           body: {
             type: Object,
-            computed: 'getBody(filterstr)'
+            computed: 'getBody(filterstr)',
+            value:'query { authors { authorid authorGivName authorLastName count }}'
         }
 
       }
