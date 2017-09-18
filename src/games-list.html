@@ -13,8 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
@@ -66,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="card-content">
             <div class="rate-header">[[item.gamename]]  <template is="dom-if" if="[[item.year]]">([[item.year]])</template></div>
             <div class="rate-name"><template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template></div>
-            <div><template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]] <iron-icon icon="flag:de"></iron-icon></template></div>
+            <div><template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template></div>
             <paper-icon-button right icon="favorite"></paper-icon-button>
             <paper-icon-button icon="star"></paper-icon-button>
         </div>

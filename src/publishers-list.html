@@ -33,6 +33,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
+    <custom-style>
+      <style is="custom-style">
+        .rate-header {
+          @apply --paper-font-headline;
+        }
+
+        .rate-name {
+          color: var(--paper-grey-600);
+          margin: 10px 0;
+        }
+
+        paper-icon-button.rate-icon {
+          --iron-icon-fill-color: white;
+          --iron-icon-stroke-color: var(--paper-grey-600);
+        }
+      </style>
+    </custom-style>
     <div class="autocomplete-wrapper">
       <paper-input id="search" label="Suche" style="max-width:500px" value="{{filterstr}}">
         <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
@@ -42,9 +59,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       method="POST" body=[[body]] auto></iron-ajax>
     <iron-list items="[[data]]" as="item">
       <template>
-        <paper-card heading="[[item.publishername]]" alt="[[item.publishername]]">
+        <paper-card class="rate">
           <div class="card-content">
-            [[item.count]] Spiele
+            <div class="rate-header">[[inc(index)]]. [[item.publishername]]</div>
+            <div class="rate-name">[[item.count]] Spiele</div>
             <paper-icon-button right icon="favorite"></paper-icon-button>
             <paper-icon-button icon="star"></paper-icon-button>
           </div>
@@ -67,23 +85,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           body: {
             type: Object,
-            computed: 'getBody(filterstr)'
+            computed: 'getBody(filterstr)',
+            value: {
+              query: 'query {publishers { publisherid publishername count }}'
+            }
+          }
+
         }
 
       }
-      
+      inc(idx) {
+        return idx+1
       }
       getBody(filterStr) {
-        // if (filterStr.length > 3)
-        // return {
-        //   query: `query {authors { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}`
-        // }
-        // else 
+        if (filterStr.length > 0)
         return {
-          query: 'query { publishers { publisherid publishername count }}' }
+          query: `query {publishers(publishername:"${filterStr}") { publisherid publishername count }}`
+        }
+        else 
+        return {
+          query: "publishers { publisherid publishername count }"
+        }
       }
       handleResponse(event) {
-        this.set('data', event.detail.response.data.games)
+        this.set('data', event.detail.response.data.publishers)
       }
     }
 

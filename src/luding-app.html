@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="my-icons.html">
 
-<dom-module id="my-app">
+<dom-module id="luding-app">
   <template>
     <style>
        :host {
@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer">
-        <app-toolbar>Spiele</app-toolbar>
+        <app-toolbar>Luding.org</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="view2" href$="[[rootPath]]view2">News</a>
           <a name="games" href$="[[rootPath]]games">Spiele</a>
@@ -90,7 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>Luding.org</div>
+            <div main-title>{{pagetitle}}</div>
           </app-toolbar>
         </app-header>
 
@@ -107,10 +107,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-
     class MyApp extends Polymer.Element {
 
-      static get is() { return 'my-app'; }
+      static get is() { return 'luding-app'; }
 
       static get properties() {
         return {
@@ -118,6 +117,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             reflectToAttribute: true,
             observer: '_pageChanged',
+          },
+          pagetitle: { 
+            type: String, 
+            value: 'die Brettspieldatenbank'
           },
           routeData: Object,
           subroute: String,

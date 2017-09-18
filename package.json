@@ -18,7 +18,7 @@
     "build": "webpack",
     "watch": "webpack --watch ",
     "prod": "node --inspect=5858 index.js",
-    "dev": "webpack-dev-server --hot",
+    "dev": "webpack-dev-server",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",
     "test:integration": "polymer build # test that psk builds without error with the CLI"

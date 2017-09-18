@@ -4,7 +4,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: ['./src/my-app.html'],
+  entry: ['./src/luding-app.html'],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'public/dist'),
@@ -15,6 +15,12 @@ module.exports = {
     descriptionFiles: ['package.json']
   },
   devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './public/',
+    hot: true,
+    historyApiFallback: true
+  },
+
   module: {
     rules: [
       {
@@ -23,7 +29,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['env' ],
+              presets: ['env'],
               plugins: ['syntax-dynamic-import']
             }
           },
