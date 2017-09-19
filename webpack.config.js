@@ -1,4 +1,6 @@
 'use strict';
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 /* global __dirname module require*/
 /* eslint comma-dangle: ["error", "never"] */
 const path = require('path');
@@ -8,7 +10,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'public/dist'),
-    publicPath: 'dist/'
+    publicPath: 'dist/',  
   },
   resolve: {
     modules: ['node_modules', 'bower_components'],
@@ -20,7 +22,17 @@ module.exports = {
     hot: true,
     historyApiFallback: true
   },
-
+  plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      filename: 'public/index.html',
+      template: './index.tmpl',
+      // minify: process.env.debug ? {} : htmlMinifierOptions,
+      // jenkinsBuild: process.env.BUILD_TAG || 'local build',
+      generatedAt: new Date()
+  }),
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     rules: [
       {

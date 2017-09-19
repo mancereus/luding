@@ -19,7 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="authors-list">
+<dom-module id="author-details">
   <template>
     <style include="shared-styles">
        :host {
@@ -34,48 +34,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-    <custom-style>
-      <style is="custom-style">
-        .rate-header {
-          @apply --paper-font-headline;
-        }
 
-        .rate-name {
-          color: var(--paper-grey-600);
-          margin: 10px 0;
-        }
-
-        paper-icon-button.rate-icon {
-          --iron-icon-fill-color: white;
-          --iron-icon-stroke-color: var(--paper-grey-600);
-        }
-      </style>
-    </custom-style>
-    <div class="autocomplete-wrapper">
-      <paper-input id="search" label="Suche" style="max-width:500px" value="{{filterstr}}">
-        <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
-      </paper-input>
-    </div>
     <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
-    <iron-list items="[[data]]" as="item">
-      <template>
-        <paper-card class="rate">
-          <div class="card-content" on-tap="[[navigate(item.authorid)]]">
-            <div class="rate-header">[[inc(index)]]. [[item.authorGivName]] [[item.authorLastName]] xx</div>
-            <div class="rate-name">[[item.count]] Spiele
-            </div>
-            <paper-icon-button right icon="favorite"></paper-icon-button>
-            <paper-icon-button icon="star"></paper-icon-button>
-          </div>
-        </paper-card>
-      </template>
-    </iron-list>
+
+      Autor
   </template>
 
   <script>
-    class AuthorsView extends Polymer.Element {
-      static get is() { return 'authors-list'; }
+    class AuthorDetails extends Polymer.Element {
+      static get is() { return 'author-details'; }
 
       static get properties() {
         return {
@@ -83,30 +51,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           data: {
             type: Array,
             notify: true
-
           },
+          authorid: { type: Number,value: 583 },
           body: {
             type: Object,
-            computed: 'getBody(filterstr)',
-            value: { query: "query { authors { authorid authorGivName authorLastName count }}" }
+            value: { query: "query { author(authorid: 583) { authorid authorGivName authorLastName count }}" }
           }
 
         }
 
-      }
-      inc(idx) {
-        return idx+1
-      }
-      navigate(authorid) {
-        console.log(authorid)
-      }
-      getBody(filterStr) {
-        if (filterStr.length > 0)
-        return {
-          query: `query {authors(authorname:"${filterStr}") { authorid authorGivName authorLastName count }}`
-        }
-        else 
-        return { query: "query { authors { authorid authorGivName authorLastName count }}" }
       }
       handleResponse(event) {
         this.set('data', [])
@@ -115,6 +68,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     }
 
-    window.customElements.define(AuthorsView.is, AuthorsView);
+    window.customElements.define(AuthorDetails.is, AuthorDetails);
   </script>
 </dom-module>

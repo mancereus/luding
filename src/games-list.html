@@ -100,6 +100,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
       }
       handleResponse(event) {
+        this.set('data', []);
         this.set('data', event.detail.response.data.games)
         // this.notifyPath('data')
       }
