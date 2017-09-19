@@ -1,0 +1,102 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+
+<dom-module id="luding-card">
+    <template>
+        <style>
+             :host {
+                display: block
+            }
+        </style>
+        <custom-style>
+            <style is="custom-style">
+                .rate {
+                    padding: 3px;
+                    margin-bottom: 3px;
+                    width: 100%;
+                }
+
+                .rate-header {
+                    @apply --paper-font-headline;
+                }
+
+                .rate-name {
+                    color: var(--paper-grey-600);
+                    margin: 10px 0;
+                }
+
+                paper-icon-button.rate-icon {
+                    --iron-icon-fill-color: white;
+                    --iron-icon-stroke-color: var(--paper-grey-600);
+                }
+            </style>
+        </custom-style>
+        <paper-card class="rate">
+            <div class="card-content">
+                <div class="rate-header">
+                    <slot name="title"></slot>
+                    <paper-icon-button right icon="favorite"></paper-icon-button>
+                    <paper-icon-button right icon="star"></paper-icon-button>
+                </div>
+                <div class="rate-name">
+                    <slot name="subtitle"></slot>
+                </div>
+            </div>
+        </paper-card>
+
+
+
+    </template>
+
+    <script>
+        /**
+         * `luding-card` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class LudingCard extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'luding-card';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function () {
+
+                });
+            }
+
+        }
+
+        window.customElements.define(LudingCard.is, LudingCard);
+    </script>
+</dom-module>

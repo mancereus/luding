@@ -78,6 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="designers" href$="[[rootPath]]designers">Designer</a>
           <a name="reviews" href$="[[rootPath]]reviews">Rezensenionen</a>
           <a name="view3" href$="[[rootPath]]view3">Preise</a>
+          <a name="view3" href$="[[rootPath]]view3">Spielgattungen</a>
           <hr>
           <a name="view3" href$="[[rootPath]]view3">Sammlung</a>
           <a name="view3" href$="[[rootPath]]view3">Settings</a>
@@ -91,6 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>{{pagetitle}}</div>
+            <paper-icon-button icon="receipt" ></paper-icon-button>            
           </app-toolbar>
         </app-header>
 
@@ -118,10 +120,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             reflectToAttribute: true,
             observer: '_pageChanged',
-          },
-          pagetitle: { 
-            type: String, 
-            value: 'die Brettspieldatenbank'
           },
           routeData: Object,
           subroute: String,

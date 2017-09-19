@@ -17,7 +17,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="./components/luding-card.html">
+
 
 <dom-module id="author-details">
   <template>
@@ -34,11 +37,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-
+    <app-location path="{{path}}" query-params="{{queryParams}}"></app-location>
     <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
 
-      Autor
+    <h1>Autor [[data.authorGivName]] [[data.authorLastName]]</h1>
+    <div>
+      <iron-list items="[[data.authorgames]]" as="item">
+        <template>
+          <luding-card>
+            <span slot="title">[[inc(index)]]. [[item.gamename]] [[item.year]]</span>
+            <span slot="subtitle">[[item.publishername]]</span>
+          </luding-card>
+        </template>
+      </iron-list>
+    </div>
+
   </template>
 
   <script>
@@ -47,24 +61,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
+          path: String,
+          queryParams: Object,
           filterstr: String,
           data: {
             type: Array,
             notify: true
           },
-          authorid: { type: Number,value: 583 },
+          authorid: { type: Number, value: 583 },
           body: {
             type: Object,
-            value: { query: "query { author(authorid: 583) { authorid authorGivName authorLastName count }}" }
+            value: { query: "query { author(authorid: 583) { authorid authorGivName authorLastName authorgames {gameid gamename year } }}" }
           }
 
         }
 
       }
+      inc(idx) {
+        return idx + 1
+      }
       handleResponse(event) {
-        this.set('data', [])
-        this.set('data', event.detail.response.data.authors)
-        // this.notifyPath('data')
+        this.set('data', event.detail.response.data.author)
       }
     }
 
