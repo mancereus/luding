@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-
+    
     <div class="autocomplete-wrapper">
       <paper-input id="search" label="Suche" style="max-width:500px" value="{{filterstr}}">
         <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
@@ -47,7 +47,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template>
         <luding-card>
           <span slot="title">[[inc(index)]]. [[item.authorGivName]] [[item.authorLastName]]</span>
-          <span slot="subtitle">[[item.count]] Spiele</span>
+          <span slot="subtitle">[[item.count]] Spiele
+            <paper-icon-button right icon="icons:arrow-forward"  on-tap="toggleSelection">
+          </paper-icon-button></span>
         </luding-card>
       </template>
     </iron-list>
@@ -73,6 +75,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         }
 
+      }
+      toggleSelection(e) {
+        location.href = "/author/" + e.model.item.authorid
       }
       inc(idx) {
         return idx + 1

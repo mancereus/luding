@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-    <app-location path="{{path}}" query-params="{{queryParams}}"></app-location>
+    <app-location route={{route}} path={{path}} ></app-location>
     <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
 
@@ -61,6 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
+          route: String,
           path: String,
           queryParams: Object,
           filterstr: String,
@@ -68,14 +69,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             notify: true
           },
-          authorid: { type: Number, value: 583 },
           body: {
             type: Object,
-            value: { query: "query { author(authorid: 583) { authorid authorGivName authorLastName authorgames {gameid gamename year } }}" }
+            computed: "getBody(path)"
           }
 
         }
 
+      }
+      getBody(path) {
+        const authorid = path.match(/\d+/)[0]
+        console.log(authorid)
+          return { query: `query { author(authorid: ${authorid}) { authorid authorGivName authorLastName authorgames {gameid gamename year } }}` }
       }
       inc(idx) {
         return idx + 1

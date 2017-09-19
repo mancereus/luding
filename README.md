@@ -18,6 +18,6 @@ polymer serve
 
 ### Tasks
 
-* app-route
 * Splash screen
-* iron-ajax for graphql
+* navigation zur detail seite
+* rxjs für suche ohne button
