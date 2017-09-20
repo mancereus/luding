@@ -110,6 +110,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
           <news-list name="news"></news-list>
           <games-list name="games"></games-list>
+          <game-details name="game"></game-details>
           <authors-list name="authors"></authors-list>
           <author-details name="author"></author-details>
           <publishers-list name="publishers"></publishers-list>
@@ -146,6 +147,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               },
               games: function () {
                 import(/* webpackChunkName: "games-list" */ './games-list.html');
+              },
+              game: function () {
+                import(/* webpackChunkName: "game-details" */ './game-details.html');
               },
               authors: function () {
                 import(/* webpackChunkName: "authors-list" */ './authors-list.html');

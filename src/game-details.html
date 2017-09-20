@@ -13,14 +13,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="./components/luding-card.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="./components/luding-card.html">
 
-<dom-module id="authors-list">
+
+<dom-module id="game-details">
   <template>
     <style include="shared-styles">
        :host {
@@ -35,68 +37,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-    
-    <div class="autocomplete-wrapper">
-      <paper-input id="search" label="Suche" style="max-width:500px" value="{{filterstr}}">
-        <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
-      </paper-input>
-    </div>
+    <app-location route={{route}} path={{path}}></app-location>
     <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
-    <iron-list items="[[data]]" as="item">
-      <template>
-        <luding-card>
-          <span slot="title">[[inc(index)]]. [[item.authorGivName]] [[item.authorLastName]]</span>
-          <span slot="subtitle">[[item.count]] Spiele
-            </span><paper-icon-button icon="icons:arrow-forward"  on-tap="toggleSelection">
-              </paper-icon-button>
-        </luding-card>
-      </template>
-    </iron-list>
+
+    <h1>[[data.gamename]]</h1>
+    <h3>
+      <template is="dom-repeat" items="[[data.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template>
+      </div>
+      <div>
+        <template is="dom-repeat" items="[[data.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template>
+    </h3>
+    <div>
+
+    </div>
+
   </template>
 
   <script>
-    class AuthorsView extends Polymer.Element {
-      static get is() { return 'authors-list'; }
+    class GameDetails extends Polymer.Element {
+      static get is() { return 'game-details'; }
 
       static get properties() {
         return {
+          route: String,
+          path: String,
+          queryParams: Object,
           filterstr: String,
           data: {
             type: Array,
             notify: true
-
           },
           body: {
             type: Object,
-            computed: 'getBody(filterstr)',
-            value: { query: "query { authors { authorid authorGivName authorLastName count }}" }
+            computed: "getBody(path)"
           }
 
         }
 
       }
-      toggleSelection(e) {
-        location.href = "/author/" + e.model.item.authorid
+      getBody(path) {
+        const gameid = path.match(/\d+/)[0]
+        console.log(gameid)
+        return { query: `query {game(gameid: ${gameid}){ gamename gameid comment year type status edition articleNumber mainTheme minorTheme fromNoPlayers toNoPlayers fromAge toAge fromDuration toDuration subtype gameAuthors { authorid authorLastName authorGivName } gamePublishers { publisherid publishername country } }}` }
       }
       inc(idx) {
         return idx + 1
       }
-      getBody(filterStr) {
-        if (filterStr.length > 0)
-          return {
-            query: `query {authors(authorname:"${filterStr}") { authorid authorGivName authorLastName count }}`
-          }
-        else
-          return { query: "query { authors { authorid authorGivName authorLastName count }}" }
-      }
       handleResponse(event) {
-        this.set('data', [])
-        this.set('data', event.detail.response.data.authors)
-        // this.notifyPath('data')
+        this.set('data', event.detail.response.data.author)
       }
     }
 
-    window.customElements.define(AuthorsView.is, AuthorsView);
+    window.customElements.define(GameDetails.is, GameDetails);
   </script>
 </dom-module>

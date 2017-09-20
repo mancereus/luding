@@ -16,6 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./components/luding-card.html">
 <link rel="import" href="../bower_components/material-flag-icons/flag-icons.html">
 <link rel="import" href="shared-styles.html">
 
@@ -34,23 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-    <custom-style>
-      <style is="custom-style">
-        .rate-header {
-          @apply --paper-font-headline;
-        }
-
-        .rate-name {
-          color: var(--paper-grey-600);
-          margin: 10px 0;
-        }
-
-        paper-icon-button.rate-icon {
-          --iron-icon-fill-color: white;
-          --iron-icon-stroke-color: var(--paper-grey-600);
-        }
-      </style>
-    </custom-style>
+    
     <div class="autocomplete-wrapper">
       <paper-input id="search" label="Suche" style="max-width:500px" value="{{filterstr}}">
         <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
@@ -60,15 +45,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       method="POST" body=[[body]] auto></iron-ajax>
     <iron-list items="[[data]]" as="item">
       <template>
-        <paper-card class="rate">
-          <div class="card-content">
-            <div class="rate-header">[[item.gamename]]  <template is="dom-if" if="[[item.year]]">([[item.year]])</template></div>
-            <div class="rate-name"><template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template></div>
-            <div><template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template></div>
-            <paper-icon-button right icon="favorite"></paper-icon-button>
-            <paper-icon-button icon="star"></paper-icon-button>
-        </div>
-        </paper-card>
+        <luding-card>
+          <span slot="title">[[inc(index)]]. [[item.gamename]]  <template is="dom-if" if="[[item.year]]">([[item.year]])</template></span>
+          <span slot="subtitle"><template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template></div>
+                <div><template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template>
+                <paper-icon-button right icon="icons:arrow-forward"  on-tap="toggleSelection">
+              </paper-icon-button></span>
+        </luding-card>
       </template>
     </iron-list>
   </template>
@@ -87,17 +70,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           body: {
             type: Object,
-            computed: 'getBody(filterstr)'
+            computed: 'getBody(filterstr)',
+            value: {
+              query: 'query {games { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}'
+            }
           }
 
         }
 
+      }
+      inc(idx) {
+        return idx + 1
       }
       getBody(filterStr) {
         if (filterStr.length > 3)
           return {
             query: `query {games(gamename:"${filterStr}") { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}`
           }
+        return {
+          query: 'query {games { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}'
+        }
+      }
+      toggleSelection(e) {
+        location.href = "/game/" + e.model.item.gameid
       }
       handleResponse(event) {
         this.set('data', []);
