@@ -66,9 +66,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <app-location route="{{route}}" ></app-location>
+    <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
-
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer">
@@ -94,16 +93,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>{{pagetitle}}</div>
-            <paper-icon-button icon="receipt" ></paper-icon-button>
+            <div main-title>{{_computeTitle(page)}}</div>
+            <paper-icon-button icon="receipt"></paper-icon-button>
             <paper-menu-button>
-                <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
-                <paper-listbox slot="dropdown-content">
-                  <paper-item>Sortierung</paper-item>
-                  <paper-item>Sammlung</paper-item>
-                  <paper-item>Login</paper-item>
-                </paper-listbox>
-              </paper-menu-button>            
+              <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
+              <paper-listbox slot="dropdown-content">
+                <paper-item>Sortierung</paper-item>
+                <paper-item>Sammlung</paper-item>
+                <paper-item>Login</paper-item>
+              </paper-listbox>
+            </paper-menu-button>
           </app-toolbar>
         </app-header>
 
@@ -180,7 +179,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       constructor() {
         super();
       }
-
+      _computeTitle(page) {
+        const titles = {
+              news: "News",
+              games: "Spiele",
+              game: "Spiel",
+              authors: "Autoren",
+              author: "Autor",
+              publishers: "Verlage",
+              publisher: "Verlag"
+            }
+        return titles[page]
+      }
       _routePageChanged(page) {
         // Polymer 2.0 will call with `undefined` on initialization.
         // Ignore until we are properly called with a string.
