@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <template>
           <luding-card>
             <span slot="title">[[inc(index)]]. [[item.gamename]] [[item.year]]</span>
-            <span slot="subtitle">[[item.publishername]]</span>
+            <span slot="subtitle">[[item.publishername]] [[item.type]]</span>
           </luding-card>
         </template>
       </iron-list>
@@ -80,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       getBody(path) {
         const authorid = path.match(/\d+/)[0]
         console.log(authorid)
-          return { query: `query { author(authorid: ${authorid}) { authorid authorGivName authorLastName authorgames {gameid gamename year } }}` }
+          return { query: `query { author(authorid: ${authorid}) { authorid authorGivName authorLastName authorgames {gameid gamename year type } }}` }
       }
       inc(idx) {
         return idx + 1

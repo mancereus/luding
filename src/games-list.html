@@ -26,34 +26,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        :host {
         display: block;
 
-        padding: 10px;
+        padding: 0;
+      }
+
+      .content {
+        width: 80%;
+        margin-left: 10%;
+        padding: 0 10px;
       }
 
       iron-list {
         height: 100vh;
         /* don't use % values unless the parent element is sized. */
-        max-width: 500px;
+        width: 100%;
       }
     </style>
-    
-    <div class="autocomplete-wrapper">
+    <paper-card class="content">
       <paper-input id="search" label="Suche" style="max-width:500px" value="{{filterstr}}">
         <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
       </paper-input>
-    </div>
-    <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
-      method="POST" body=[[body]] auto></iron-ajax>
-    <iron-list items="[[data]]" as="item">
-      <template>
-        <luding-card>
-          <span slot="title">[[inc(index)]]. [[item.gamename]]  <template is="dom-if" if="[[item.year]]">([[item.year]])</template></span>
-          <span slot="subtitle"><template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template></div>
-                <div><template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template>
-                <paper-icon-button right icon="icons:arrow-forward"  on-tap="toggleSelection">
-              </paper-icon-button></span>
-        </luding-card>
-      </template>
-    </iron-list>
+      <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
+        method="POST" body=[[body]] auto></iron-ajax>
+      <iron-list items="[[data]]" as="item">
+        <template>
+          <luding-card>
+            <span slot="title">[[inc(index)]]. [[item.gamename]] </span>
+            <span slot="subtitle" style="display:flex;flex: wrap">
+                <template is="dom-if" if="[[item.year]]">([[item.year]])</template>
+                  <template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template>
+                  <br>
+                  <template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template>
+            </span>
+            <span slot="actions">
+              <paper-icon-button right icon="icons:arrow-forward"  on-tap="navigate"> </paper-icon-button>
+            </span>
+          </luding-card>
+        </template>
+      </iron-list>
+    </paper-card>
   </template>
 
   <script>
@@ -91,7 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           query: 'query {games { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}'
         }
       }
-      toggleSelection(e) {
+      navigate(e) {
         location.href = "/game/" + e.model.item.gameid
       }
       handleResponse(event) {

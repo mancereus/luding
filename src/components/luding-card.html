@@ -13,20 +13,32 @@
         <custom-style>
             <style is="custom-style">
                 .rate {
-                    padding: 3px;
+                    padding: 0;
                     margin-bottom: 3px;
                     width: 100%;
                 }
 
                 .rate-header {
-                    @apply --paper-font-headline;
+                    align-self: center;
+                    flex-grow: 4;
                 }
-
-                .rate-name {
+                .title {
+                    @apply --paper-font-headline;
+                    font-size: 140%;
+                }
+                .subtitle {
+                    @apply --paper-font-subhead;
                     color: var(--paper-grey-600);
+                }
+                .rate-name {
                     margin: 10px 0;
                 }
-
+                .card-content {
+                    padding: 2px 5px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                }
                 paper-icon-button.rate-icon {
                     --iron-icon-fill-color: white;
                     --iron-icon-stroke-color: var(--paper-grey-600);
@@ -36,12 +48,13 @@
         <paper-card class="rate">
             <div class="card-content">
                 <div class="rate-header">
-                    <slot name="title"></slot>
+                    <slot name="title" class="title"></slot><br>
+                    <slot name="subtitle" class="subtitle"></slot>
                 </div>
                 <div class="rate-name">
-                    <slot name="subtitle"></slot>
                     <paper-icon-button right icon="favorite"></paper-icon-button>
                     <paper-icon-button right icon="star"></paper-icon-button>
+                    <slot name="actions" class="actions"></slot>
                 </div>
             </div>
         </paper-card>
