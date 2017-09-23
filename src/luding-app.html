@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/splash-screen/splash-screen.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
@@ -29,8 +30,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
        :host {
-        --app-primary-color: #3D2814;
-        --app-secondary-color: #FF3C3C;
+        --app-primary-color: #90A4AE;
+        --app-secondary-color: #FF8A65;
 
         display: block;
       }
@@ -68,6 +69,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <app-location route="{{route}}"></app-location>
     <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
+    <!-- <splash-screen align="middle" show="{{splash}}" background-style="#432" destroy="true">
+      <img src="https://dummyimage.com/600x400/90A4AE/FF8A65.png" class="center-aligned" slot="logo" alt="">
+      <div slot="content">
+        Luding.org
+      </div>
+
+    </splash-screen> -->
+
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer">
@@ -97,7 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="receipt"></paper-icon-button>
             <paper-menu-button>
               <paper-icon-button icon="menu" slot="dropdown-trigger" alt="menu"></paper-icon-button>
-              <paper-listbox slot="dropdown-content">
+              <paper-listbox right slot="dropdown-content">
                 <paper-item>Sortierung</paper-item>
                 <paper-item>Sammlung</paper-item>
                 <paper-item>Login</paper-item>
@@ -127,6 +136,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
+          splash: {type: Boolean, value: true},
           page: {
             type: String,
             reflectToAttribute: true,
@@ -179,16 +189,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       constructor() {
         super();
       }
+      connectedCallback() {
+        super.connectedCallback();
+        window.setTimeout(() => {this.splash = false;}, 2000)
+        
+      }
       _computeTitle(page) {
         const titles = {
-              news: "News",
-              games: "Spiele",
-              game: "Spiel",
-              authors: "Autoren",
-              author: "Autor",
-              publishers: "Verlage",
-              publisher: "Verlag"
-            }
+          news: "News",
+          games: "Spiele",
+          game: "Spiel",
+          authors: "Autoren",
+          author: "Autor",
+          publishers: "Verlage",
+          publisher: "Verlag"
+        }
         return titles[page]
       }
       _routePageChanged(page) {
@@ -200,7 +215,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         // If no page was found in the route data, page will be an empty string.
         // Deault to 'view1' in that case.
-        this.page = page || 'view1';
+        this.page = page || 'news';
 
         // Close a non-persistent drawer when the page & route are changed.
         if (!this.$.drawer.persistent) {

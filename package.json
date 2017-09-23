@@ -17,8 +17,8 @@
     "lint": "npm run lint:javascript",
     "build": "webpack",
     "watch": "webpack --watch ",
-    "prod": "node --inspect=5858 index.js",
-    "dev": "webpack-dev-server",
+    "prod": "node index.js",
+    "dev": "webpack-dev-server --host 0.0.0.0",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",
     "test:integration": "polymer build # test that psk builds without error with the CLI"

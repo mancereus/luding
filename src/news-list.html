@@ -9,25 +9,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="news-list">
   <template>
     <style include="shared-styles">
-      :host {
+       :host {
         display: block;
 
         padding: 10px;
       }
     </style>
 
-    <div class="card">
-      <div class="circle">2</div>
-      <h1>View Two</h1>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-      <p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
+<div class="card">
+    <div class="circle">01.09.2017</div>
+    <h1>Neuerscheinungen Essen 2017
+      <paper-icon-button right icon="icons:arrow-forward" on-tap="navigate"> </paper-icon-button>
+    </h1>
+  </div>
+  <div class="card">
+      <div class="circle">01.02.2017</div>
+      <h1>Neuerscheinungen Nürnberg 2017
+        <paper-icon-button right icon="icons:arrow-forward" on-tap="navigate"> </paper-icon-button>
+      </h1>
     </div>
-  </template>
+</template>
 
   <script>
     class NewsList extends Polymer.Element {
