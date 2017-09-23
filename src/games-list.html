@@ -46,15 +46,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <luding-search data="{{data}}" responseprop="games" queryfunction="[[getBody]]" > </luding-search>
       <iron-list items="[[data]]" as="item">
         <template>
-          <luding-card>
+          <luding-card item="[[item]]" godetails="[[navigate]]" objid="gameid">
             <span slot="title" style="display:flex;flex: wrap">[[inc(index)]]. [[item.gamename]] </span>
             <span slot="subtitle" style="display:flex;flex: wrap; flex-orientation: row">
               <template is="dom-if" if="[[item.year]]">([[item.year]])</template>
               <template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]],</template>
               <template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]],</template>
-            </span>
-            <span slot="actions">
-                <paper-icon-button right icon="icons:arrow-forward"  on-tap="navigate"> </paper-icon-button>
             </span>
           </luding-card>
         </template>
@@ -92,8 +89,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           query: 'query {games { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}'
         }
       }
-      navigate(e) {
-        location.href = "/game/" + e.model.item.gameid
+      navigate(objid) {
+        window.history.pushState({}, null, '/game/' + objid);
+        window.dispatchEvent(new CustomEvent('location-changed'));
       }
     }
 

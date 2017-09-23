@@ -224,6 +224,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _pageChanged(page) {
+        console.log(`page ${page}`)
         if (this.lazyPages[page]) {
           this.lazyPages[page]();
         } else {

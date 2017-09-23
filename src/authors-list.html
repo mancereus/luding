@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <luding-search data="{{data}}" responseprop="authors" queryfunction="[[getBody]]"> </luding-search>
     <iron-list items="[[data]]" as="item">
       <template>
-        <luding-card>
+        <luding-card item="[[item]]"  godetails="[[navigate]]" objid="authorid">
           <span slot="title">[[inc(index)]]. [[item.authorGivName]] [[item.authorLastName]]</span>
           <span slot="subtitle">[[item.count]] Spiele
             </span>
@@ -79,6 +79,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         else
           return { query: "query { authors { authorid authorGivName authorLastName count }}" }
+      }
+      navigate(objid) {
+        window.history.pushState({}, null, '/game/' + objid);
+        window.dispatchEvent(new CustomEvent('location-changed'));
       }
     }
 

@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 
@@ -12,6 +13,24 @@
         </style>
         <custom-style>
             <style is="custom-style">
+                paper-icon-button.active {
+                    color: var(--paper-pink-500);
+                    --paper-icon-button-ink-color: var(--paper-indigo-500);
+                }
+
+                paper-icon-button.pink:hover {
+                    background-color: var(--paper-pink-500);
+                    color: white;
+                }
+
+                paper-icon-button.blue {
+                    --paper-icon-button-ink-color: var(--paper-orange-500);
+                    background-color: var(--paper-light-blue-500);
+                    color: white;
+                    border-radius: 3px;
+                    padding: 2px;
+                }
+
                 .rate {
                     padding: 0;
                     margin-bottom: 3px;
@@ -22,38 +41,47 @@
                     align-self: center;
                     flex-grow: 4;
                 }
+
                 .title {
                     @apply --paper-font-headline;
                     font-size: 140%;
                 }
+
                 .subtitle {
                     @apply --paper-font-subhead;
                     color: var(--paper-grey-600);
                 }
+
                 .rate-name {
                     margin: 0;
                 }
+
                 .card-content {
                     padding: 2px 5px;
                     display: flex;
                     flex-wrap: wrap;
                     justify-content: space-between;
                 }
+
                 paper-icon-button.rate-icon {
                     --iron-icon-fill-color: white;
                     --iron-icon-stroke-color: var(--paper-grey-600);
                 }
             </style>
         </custom-style>
+        <app-localstorage-document key="[[item.authorid]]" data="{{item.active}}" debug></app-localstorage-document>
         <paper-card class="rate">
             <div class="card-content">
                 <div class="rate-header">
-                    <h3  style="margin: 0"><slot name="title" class="title"></slot></h3>
+                    <h3 style="margin: 0">
+                        <slot name="title" class="title"></slot>
+                    </h3>
                     <slot name="subtitle" class="subtitle"></slot>
                 </div>
                 <div class="rate-name">
-                    <paper-icon-button right icon="favorite"></paper-icon-button>
-                    <paper-icon-button right icon="star"></paper-icon-button>
+                    <paper-icon-button right icon="favorite" on-tap="toggle"></paper-icon-button>
+                    <paper-icon-button right icon="star" on-tap="toggle"></paper-icon-button>
+                    <paper-icon-button right icon="icons:arrow-forward" on-tap="navigate"> </paper-icon-button>
                     <slot name="actions" class="actions"></slot>
                 </div>
             </div>
@@ -85,6 +113,18 @@
              */
             static get properties() {
                 return {
+                    item: {
+                        type: Array,
+                        notify: true
+                    },
+                    objid: {
+                        type: String,
+                        value: ""
+                    },
+                    godetails: {
+                        type: Function,
+
+                    }
                 };
             }
 
@@ -107,7 +147,14 @@
 
                 });
             }
-
+            toggle(event) {
+                console.log(this.item)
+                this.item.active = !this.item.active
+                event.target.toggleClass("active")
+            }
+            navigate(event) {
+                this.godetails(this.item[this.objid])
+            }
         }
 
         window.customElements.define(LudingCard.is, LudingCard);
