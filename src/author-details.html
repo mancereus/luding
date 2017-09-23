@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="./components/luding-card.html">
+<link rel="import" href="./games-listfragment.html">
 
 
 <dom-module id="author-details">
@@ -41,16 +42,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
 
-    <h1>Autor [[data.authorGivName]] [[data.authorLastName]]</h1>
+    <h1>[[data.authorGivName]] [[data.authorLastName]]</h1>
     <div>
-      <iron-list items="[[data.authorgames]]" as="item">
-        <template>
-          <luding-card>
-            <span slot="title">[[inc(index)]]. [[item.gamename]] [[item.year]]</span>
-            <span slot="subtitle">[[item.publishername]] [[item.type]]</span>
-          </luding-card>
-        </template>
-      </iron-list>
+      <games-listfragment data="[[data.authorgames]]"></games-listfragment>
     </div>
 
   </template>
@@ -88,6 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handleResponse(event) {
         this.set('data', event.detail.response.data.author)
       }
+
     }
 
     window.customElements.define(AuthorDetails.is, AuthorDetails);

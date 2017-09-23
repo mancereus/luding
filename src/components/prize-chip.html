@@ -24,7 +24,7 @@
 
         </style>
 
-        <luding-chip icon="icons:stars">
+        <luding-chip icon="icons:stars" type="prize" objid="[[id]]">
             <slot></slot>
             <div slot="caption">Spielpreis</div>
         </luding-chip>
@@ -54,6 +54,7 @@
              */
             static get properties() {
                 return {
+                    objid: Number,
                     icon: { type: String, value: "" },
                     onTapFunc: Function
 

@@ -30,7 +30,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="./components/luding-card.html">
 <link rel="import" href="./components/luding-chip.html">
+<link rel="import" href="./components/luding-row.html">
 <link rel="import" href="./components/author-chip.html">
+<link rel="import" href="./components/prize-chip.html">
+<link rel="import" href="./components/serie-chip.html">
+<link rel="import" href="./components/info-chip.html">
 <link rel="import" href="./components/publisher-chip.html">
 
 
@@ -52,19 +56,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-location route={{route}} path={{path}}></app-location>
     <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
-    <paper-card style="padding: 3px">
-      <app-header-layout has-scrolling-region style="width: 70vw; height: 80vh;">
-        <app-header slot="header" condenses effects="waterfall">
-          <app-toolbar>
-            <div main-title>[[data.gamename]]</div>
-          </app-toolbar>
-        </app-header>
-        <div>
+    <paper-card style="padding: 3px; width: 100%">
+        <h3>[[data.gamename]]</h3>
+        <luding-row>
           <template is="dom-repeat" items="[[data.gameSeries]]" as="serie"><serie-chip> [[serie.series]] </serie-chip> </template>
           <template is="dom-repeat" items="[[data.gamePrizes]]" as="prize"><prize-chip>[[prize.prizename]]</prize-chip>  </template>
-        </div>
-        <hr>
-        <div style="display: flex">
+        </luding-row>
+        <luding-row>
           <template is="dom-repeat" items="[[data.gameAuthors]]" as="author">
             <author-chip>
               [[author.authorGivName]] [[author.authorLastName]]
@@ -81,15 +79,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               [[publisher.publishername]]
             </publisher-chip>
           </template>
-        </div>
-        <hr>
-        <div>
-          <iron-icon icon="social:group"></iron-icon> [[data.fromNoPlayers]] - [[data.toNoPlayers]]
-          <iron-icon icon="device:access-time"></iron-icon> [[data.fromDuration]] - [[data.toDuration]]
-          <iron-icon icon="image:filter-9-plus"></iron-icon> [[data.fromAge]] - [[data.toAge]]
-        </div>
-        <hr>
-      </app-header-layout>
+        </luding-row>
+        <luding-row>
+          <info-chip caption="Spieleranzahl" icon="social:group">[[data.fromNoPlayers]] - [[data.toNoPlayers]]</info-chip> 
+          <info-chip caption="Spieldauer" icon="device:access-time">[[data.fromDuration]] - [[data.toDuration]]</info-chip> 
+          <info-chip caption="Spielalter" icon="image:filter-9-plus">[[data.fromAge]] - [[data.toAge]]</info-chip> 
+        </luding-row>
 
     </paper-card>
     <div>

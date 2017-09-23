@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="./components/luding-card.html">
 <link rel="import" href="./components/luding-search.html">
+<link rel="import" href="./games-listfragment.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="games-list">
@@ -44,18 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <paper-card class="content">
       <luding-search data="{{data}}" responseprop="games" queryfunction="[[getBody]]" > </luding-search>
-      <iron-list items="[[data]]" as="item">
-        <template>
-          <luding-card item="[[item]]" godetails="[[navigate]]" objid="gameid">
-            <span slot="title" style="display:flex;flex: wrap">[[inc(index)]]. [[item.gamename]] </span>
-            <span slot="subtitle" style="display:flex;flex: wrap; flex-orientation: row">
-              <template is="dom-if" if="[[item.year]]">([[item.year]])</template>
-              <template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]],</template>
-              <template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]],</template>
-            </span>
-          </luding-card>
-        </template>
-      </iron-list>
+      <games-listfragment data="[[data]]"> </games-listfragment>
     </paper-card>
   </template>
 

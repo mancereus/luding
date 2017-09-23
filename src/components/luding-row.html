@@ -10,43 +10,38 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="../../bower_components/paper-chip/paper-chip.html">
-<link rel="import" href="./luding-chip.html">
 
 
 
 
-<dom-module id="designer-chip">
+<dom-module id="luding-row">
     <template>
         <style include="shared-styles">
              :host {
                 display: block;
             }
-
         </style>
-
-        <luding-chip icon="editor:border-color" type="designer" objid="[[id]]">
+        <div style="display: flex;flex-wrap: wrap;">
             <slot></slot>
-            <div slot="caption">Designer</div>
-        </luding-chip>
-
-
+        </div>
+        <hr>
     </template>
 
     <script>
         /**
-         * `designer-chip` Description
+         * `luding-row` Description
          *
          * @summary ShortDescription.
          * @customElement
          * @polymer
          * @extends {Polymer.Element}
          */
-        class DesignerChip extends Polymer.Element {
+        class LudingRow extends Polymer.Element {
             /**
              * String providing the tag name to register the element under.
              */
             static get is() {
-                return 'designer-chip'; 
+                return 'luding-row';
             }
 
             /**
@@ -54,9 +49,6 @@
              */
             static get properties() {
                 return {
-                    objid: Number,
-                    icon: { type: String, value: "" },
-                    onTapFunc: Function
 
                 };
             }
@@ -84,6 +76,6 @@
 
         }
 
-        window.customElements.define(DesignerChip.is, DesignerChip);
+        window.customElements.define(LudingRow.is, LudingRow);
     </script>
 </dom-module>

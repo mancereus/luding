@@ -81,7 +81,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return { query: "query { authors { authorid authorGivName authorLastName count }}" }
       }
       navigate(objid) {
-        window.history.pushState({}, null, '/game/' + objid);
+        window.history.pushState({}, null, '/author/' + objid);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
     }

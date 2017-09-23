@@ -13,74 +13,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import" href="../bower_components/iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="shared-styles.html">
-<link rel="import" href="./components/luding-search.html">
-
 <link rel="import" href="./components/luding-card.html">
+<link rel="import" href="./components/luding-search.html">
+<link rel="import" href="shared-styles.html">
 
-
-
-<dom-module id="publishers-list">
+<dom-module id="games-listfragment">
   <template>
     <style include="shared-styles">
        :host {
         display: block;
 
-        padding: 10px;
+        padding: 0;
+      }
+
+      .content {
+        width: 80%;
+        margin-left: 10%;
+        padding: 0 10px;
       }
 
       iron-list {
         height: 100vh;
-        max-width: 500px;
+        /* don't use % values unless the parent element is sized. */
+        width: 100%;
       }
     </style>
-    <luding-search data="{{data}}" responseprop="publishers" queryfunction="[[getBody]]"> </luding-search>
-    <iron-list items="[[data]]" as="item">
-      <template>
-        <luding-card item="[[item]]"  godetails="[[navigate]]" objid="publisherid">
-          <span slot="title">[[inc(index)]]. [[item.publishername]]</span>
-          <span slot="subtitle">[[item.count]] Spiele</span>
-        </luding-card>
-      </template>
-    </iron-list>
+      <iron-list items="[[data]]" as="item">
+        <template>
+          <luding-card item="[[item]]" godetails="[[navigate]]" objid="gameid">
+            <span slot="title" style="display:flex;flex: wrap">[[inc(index)]]. [[item.gamename]] </span>
+            <span slot="subtitle" style="display:flex;flex: wrap; flex-orientation: row">
+              <template is="dom-if" if="[[item.year]]">([[item.year]])</template>
+              <template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]],</template>
+              <template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]],</template>
+            </span>
+          </luding-card>
+        </template>
+      </iron-list>
   </template>
 
   <script>
-    class PublishersList extends Polymer.Element {
-      static get is() { return 'publishers-list'; }
+    class GamesListFragment extends Polymer.Element {
+      static get is() { return 'games-listfragment'; }
 
       static get properties() {
         return {
           data: {
             type: Array,
             notify: true
-          }
+
+          },
         }
+
       }
       inc(idx) {
         return idx + 1
       }
-      getBody(filterStr) {
-        if (filterStr.length > 0)
-          return {
-            query: `query {publishers(publishername:"${filterStr}") { publisherid publishername count }}`
-          }
-        else
-          return {
-            query: "query {publishers { publisherid publishername count }}"
-          }
-      }
       navigate(objid) {
-        window.history.pushState({}, null, '/publisher/' + objid);
+        window.history.pushState({}, null, '/game/' + objid);
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
-
     }
 
-    window.customElements.define(PublishersList.is, PublishersList);
+    window.customElements.define(GamesListFragment.is, GamesListFragment);
   </script>
 </dom-module>

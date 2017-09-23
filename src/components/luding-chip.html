@@ -21,23 +21,30 @@
                 display: block;
                 max-width: 600px;
             }
+
             paper-chip {
                 --paper-chip-closed-label-max-width: 400px;
                 margin-right: 10px;
             }
+
             .icon {
                 background-color: white;
                 color: black;
             }
+
             .label {
                 color: black;
             }
         </style>
 
-        <paper-chip id="chip" >
+        <paper-chip id="chip">
             <iron-icon slot="icon" class="icon" icon="[[icon]]"></iron-icon>
-            <div slot="label" class="label"><slot></slot></div>
-            <div slot="caption" class="caption"><slot name="caption"></slot></div>
+            <div slot="label" class="label">
+                <slot></slot>
+            </div>
+            <div slot="caption" class="caption">
+                <slot name="caption"></slot>
+            </div>
         </paper-chip>
 
 
@@ -66,7 +73,7 @@
             static get properties() {
                 return {
                     icon: { type: String, value: "" },
-                    onTapFunc: Function
+                    type: { type: String, value: "" },
 
                 };
             }
@@ -91,6 +98,11 @@
                 super.connectedCallback()
 
             }
+            navigate(type, objid) {
+                window.history.pushState({}, null, '/' + type +'/' + objid);
+                window.dispatchEvent(new CustomEvent('location-changed'));
+            }
+
 
         }
 

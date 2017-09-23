@@ -24,9 +24,9 @@
 
         </style>
 
-        <luding-chip icon="icons:view-week">
+        <luding-chip icon="icons:view-week" type="serie" objid="[[id]]">
             <slot></slot>
-            <div slot="caption">gehört zur Serie</div>
+            <div slot="caption">Serie</div>
         </luding-chip>
 
 
@@ -54,6 +54,7 @@
              */
             static get properties() {
                 return {
+                    objid: Number,
                     icon: { type: String, value: "" },
                     onTapFunc: Function
 

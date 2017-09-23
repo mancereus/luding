@@ -17,14 +17,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="shared-styles.html">
-<link rel="import" href="./components/luding-search.html">
-
 <link rel="import" href="./components/luding-card.html">
+<link rel="import" href="./games-listfragment.html">
 
 
-
-<dom-module id="publishers-list">
+<dom-module id="publisher-details">
   <template>
     <style include="shared-styles">
        :host {
@@ -35,52 +34,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       iron-list {
         height: 100vh;
+        /* don't use % values unless the parent element is sized. */
         max-width: 500px;
       }
     </style>
-    <luding-search data="{{data}}" responseprop="publishers" queryfunction="[[getBody]]"> </luding-search>
-    <iron-list items="[[data]]" as="item">
-      <template>
-        <luding-card item="[[item]]"  godetails="[[navigate]]" objid="publisherid">
-          <span slot="title">[[inc(index)]]. [[item.publishername]]</span>
-          <span slot="subtitle">[[item.count]] Spiele</span>
-        </luding-card>
-      </template>
-    </iron-list>
+    <app-location route={{route}} path={{path}} ></app-location>
+    <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
+      method="POST" body=[[body]] auto></iron-ajax>
+
+    <h1>[[data.publishername]]</h1>
+    <div>
+      <games-listfragment data="[[data.publishergames]]"></games-listfragment>
+    </div>
+
   </template>
 
   <script>
-    class PublishersList extends Polymer.Element {
-      static get is() { return 'publishers-list'; }
+    class PublisherDetails extends Polymer.Element {
+      static get is() { return 'publisher-details'; }
 
       static get properties() {
         return {
+          route: String,
+          path: String,
+          queryParams: Object,
+          filterstr: String,
           data: {
             type: Array,
             notify: true
+          },
+          body: {
+            type: Object,
+            computed: "getBody(path)"
           }
+
         }
+
+      }
+      getBody(path) {
+        const publisherid = path.match(/\d+/)[0]
+        console.log(publisherid)
+          return { query: `query { publisher(publisherid: ${publisherid}) { publisherid publishername publishergames {gameid gamename year type } }}` }
       }
       inc(idx) {
         return idx + 1
       }
-      getBody(filterStr) {
-        if (filterStr.length > 0)
-          return {
-            query: `query {publishers(publishername:"${filterStr}") { publisherid publishername count }}`
-          }
-        else
-          return {
-            query: "query {publishers { publisherid publishername count }}"
-          }
-      }
-      navigate(objid) {
-        window.history.pushState({}, null, '/publisher/' + objid);
-        window.dispatchEvent(new CustomEvent('location-changed'));
+      handleResponse(event) {
+        this.set('data', event.detail.response.data.publisher)
       }
 
     }
 
-    window.customElements.define(PublishersList.is, PublishersList);
+    window.customElements.define(PublisherDetails.is, PublisherDetails);
   </script>
 </dom-module>

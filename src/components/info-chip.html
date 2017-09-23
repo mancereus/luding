@@ -15,7 +15,7 @@
 
 
 
-<dom-module id="designer-chip">
+<dom-module id="info-chip">
     <template>
         <style include="shared-styles">
              :host {
@@ -24,9 +24,9 @@
 
         </style>
 
-        <luding-chip icon="editor:border-color" type="designer" objid="[[id]]">
+        <luding-chip icon="[[icon]]">
             <slot></slot>
-            <div slot="caption">Designer</div>
+            <div slot="caption">[[caption]]</div>
         </luding-chip>
 
 
@@ -34,19 +34,19 @@
 
     <script>
         /**
-         * `designer-chip` Description
+         * `info-chip` Description
          *
          * @summary ShortDescription.
          * @customElement
          * @polymer
          * @extends {Polymer.Element}
          */
-        class DesignerChip extends Polymer.Element {
+        class InfoChip extends Polymer.Element {
             /**
              * String providing the tag name to register the element under.
              */
             static get is() {
-                return 'designer-chip'; 
+                return 'info-chip'; 
             }
 
             /**
@@ -54,8 +54,8 @@
              */
             static get properties() {
                 return {
-                    objid: Number,
                     icon: { type: String, value: "" },
+                    caption: { type: String },
                     onTapFunc: Function
 
                 };
@@ -84,6 +84,6 @@
 
         }
 
-        window.customElements.define(DesignerChip.is, DesignerChip);
+        window.customElements.define(InfoChip.is, InfoChip);
     </script>
 </dom-module>
