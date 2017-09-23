@@ -13,11 +13,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import" href="../bower_components/iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-autocomplete/paper-autocomplete.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="./components/luding-card.html">
-<link rel="import" href="../bower_components/material-flag-icons/flag-icons.html">
+<link rel="import" href="./components/luding-search.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="games-list">
@@ -42,23 +43,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <paper-card class="content">
-      <paper-input id="search" label="Suche" style="max-width:500px" value="{{filterstr}}">
-        <paper-icon-button slot="suffix" icon="search"></paper-icon-button>
-      </paper-input>
-      <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
-        method="POST" body=[[body]] auto></iron-ajax>
+      <luding-search data="{{data}}" responseprop="games" queryfunction="[[getBody]]" > </luding-search>
       <iron-list items="[[data]]" as="item">
         <template>
           <luding-card>
-            <span slot="title">[[inc(index)]]. [[item.gamename]] </span>
-            <span slot="subtitle" style="display:flex;flex: wrap">
-                <template is="dom-if" if="[[item.year]]">([[item.year]])</template>
-                  <template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template>
-                  <br>
-                  <template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template>
+            <span slot="title" style="display:flex;flex: wrap">[[inc(index)]]. [[item.gamename]] </span>
+            <span slot="subtitle" style="display:flex;flex: wrap; flex-orientation: row">
+              <template is="dom-if" if="[[item.year]]">([[item.year]])</template>
+              <template is="dom-repeat" items="[[item.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]],</template>
+              <template is="dom-repeat" items="[[item.gamePublishers]]" as="publisher"> [[publisher.publishername]],</template>
             </span>
             <span slot="actions">
-              <paper-icon-button right icon="icons:arrow-forward"  on-tap="navigate"> </paper-icon-button>
+                <paper-icon-button right icon="icons:arrow-forward"  on-tap="navigate"> </paper-icon-button>
             </span>
           </luding-card>
         </template>
@@ -72,28 +68,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       static get properties() {
         return {
-          filterstr: String,
           data: {
             type: Array,
             notify: true
 
           },
-          body: {
-            type: Object,
-            computed: 'getBody(filterstr)',
-            value: {
-              query: 'query {games { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}'
-            }
-          }
-
         }
+
+      }
+      connectedCallback() {
+        super.connectedCallback()
 
       }
       inc(idx) {
         return idx + 1
       }
       getBody(filterStr) {
-        if (filterStr.length > 3)
+        if (filterStr.length > 0)
           return {
             query: `query {games(gamename:"${filterStr}") { gameid gamename year gamePublishers {   publishername   country   searchname } gameAuthors {   authorid   authorLastName   authorGivName   authorgames {     gamename   } } }}`
           }
@@ -103,11 +94,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       navigate(e) {
         location.href = "/game/" + e.model.item.gameid
-      }
-      handleResponse(event) {
-        this.set('data', []);
-        this.set('data', event.detail.response.data.games)
-        // this.notifyPath('data')
       }
     }
 

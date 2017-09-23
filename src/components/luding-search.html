@@ -1,0 +1,120 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-autocomplete/paper-autocomplete.html">
+
+
+
+<dom-module id="luding-search">
+    <template>
+        <style include="shared-styles">
+             :host {
+                display: block;
+
+                padding: 0;
+            }
+
+            paper-spinner-lite.orange {
+                --paper-spinner-color: var(--google-yellow-500);
+            }
+        </style>
+        <iron-a11y-keys id="a11y" target="[[target]]" keys="enter" on-keys-pressed="search"></iron-a11y-keys>
+        <paper-input id="input" label="Suche" style="max-width:500px" value="{{filterstr}}">
+            <div slot="suffix">
+                <paper-spinner-lite active="{{loading}}" class="orange"></paper-spinner-lite>
+                <paper-icon-button icon="search" on-tap="search"></paper-icon-button>
+            </div>
+        </paper-input>
+
+        <iron-ajax id="ajax" loading="{{loading}}" url="http://192.168.178.32:4000/graphql" debounce-duration="300" on-response="handleResponse"
+            content-type="application/json" handle-as="json" method="POST" body=[[query]]></iron-ajax>
+
+
+
+    </template>
+
+    <script>
+        /**
+         * `luding-search` Description
+         *
+         * @summary ShortDescription.
+         * @customElement
+         * @polymer
+         * @extends {Polymer.Element}
+         */
+        class LudingSearch extends Polymer.Element {
+            /**
+             * String providing the tag name to register the element under.
+             */
+            static get is() {
+                return 'luding-search';
+            }
+
+            /**
+             * Object describing property-related metadata used by Polymer features
+             */
+            static get properties() {
+                return {
+                    filterstr: { type: String, value: "" },
+                    queryfunction: Function,
+                    target: {
+                        type: Object
+                    },
+                    data: {
+                        type: Array,
+                        notify: true
+                    },
+                    responseprop: String
+
+                };
+            }
+
+            /**
+             * Instance of the element is created/upgraded. Use: initializing state,
+             * set up event listeners, create shadow dom.
+             * @constructor
+             */
+            constructor() {
+                super();
+            }
+
+            /**
+             * Use for one-time configuration of your component after local DOM is initialized. 
+             */
+            ready() {
+                super.ready();
+
+                Polymer.RenderStatus.afterNextRender(this, function () {
+
+                });
+            }
+
+            connectedCallback() {
+                super.connectedCallback()
+                this.search()
+                this.target = this.$.input;
+
+            }
+            search() {
+                this.query = this.queryfunction(this.filterstr)
+                this.$.ajax.generateRequest()
+            }
+
+            handleResponse(event) {
+                this.set('data', []);
+                this.set('data', event.detail.response.data[this.responseprop])
+                // this.notifyPath('data')
+            }
+
+        }
+
+        window.customElements.define(LudingSearch.is, LudingSearch);
+    </script>
+</dom-module>

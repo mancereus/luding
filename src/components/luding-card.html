@@ -31,7 +31,7 @@
                     color: var(--paper-grey-600);
                 }
                 .rate-name {
-                    margin: 10px 0;
+                    margin: 0;
                 }
                 .card-content {
                     padding: 2px 5px;
@@ -48,7 +48,7 @@
         <paper-card class="rate">
             <div class="card-content">
                 <div class="rate-header">
-                    <slot name="title" class="title"></slot><br>
+                    <h3  style="margin: 0"><slot name="title" class="title"></slot></h3>
                     <slot name="subtitle" class="subtitle"></slot>
                 </div>
                 <div class="rate-name">

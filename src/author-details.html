@@ -38,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <app-location route={{route}} path={{path}} ></app-location>
-    <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
+    <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
 
     <h1>Autor [[data.authorGivName]] [[data.authorLastName]]</h1>

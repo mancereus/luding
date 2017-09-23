@@ -38,15 +38,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <app-location route={{route}} path={{path}}></app-location>
-    <iron-ajax url="http://localhost:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
+    <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
-    <h1>[[data.gamename]]</h1>
-    <h3>
+    <paper-card style="padding: 3px">
+      <h1>[[data.gamename]]
+        <template is="dom-repeat" items="[[data.gameSeries]]" as="series"> [[series.seriesname]] </template>
+      </h1>
       <template is="dom-repeat" items="[[data.gameAuthors]]" as="author"> [[author.authorGivName]] [[author.authorLastName]]</template>
-      </div>
-      <div>
-        <template is="dom-repeat" items="[[data.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template>
-    </h3>
+      <br>
+      <template is="dom-repeat" items="[[data.gamePublishers]]" as="publisher"> [[publisher.publishername]] </template>
+      <br>
+      <template is="dom-repeat" items="[[data.gameSeries]]" as="serie"> [[serie.series]] </template>
+      <template is="dom-repeat" items="[[data.gamePrizes]]" as="prize"> [[prize.prizename]] </template>
+
+      <hr>
+
+    </paper-card>
     <div>
 
     </div>
