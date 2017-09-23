@@ -18,6 +18,12 @@ polymer serve
 
 ### Tasks
 
-* Splash screen
-* navigation zur detail seite
-* rxjs für suche ohne button
+* Splash screen neu machen
+* swipe navigation left right (Gesture)
+* toast onTap action
+* refaktor lusign list
+* app-localstoreage /firebase
+* user auth
+* sequelize mysql date (moment parse date)
+* bug iron list
+* (opt)rxjs für suche ohne button
