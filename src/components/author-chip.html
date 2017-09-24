@@ -21,12 +21,12 @@
              :host {
                 display: block;
             }
-
         </style>
 
-        <luding-chip icon="social:person" type="author" objid="[[id]]">
+        <luding-chip icon="social:person" type="author" objid="[[objid]]"  on-tap="navigate">
             <slot></slot>
-            <div slot="caption">Spielautor</div>
+            <div slot="caption">
+                <span >Spielautor</span></div>
         </luding-chip>
 
 
@@ -46,7 +46,7 @@
              * String providing the tag name to register the element under.
              */
             static get is() {
-                return 'author-chip'; 
+                return 'author-chip';
             }
 
             /**
@@ -55,7 +55,6 @@
             static get properties() {
                 return {
                     objid: Number,
-                    icon: { type: String, value: "" },
                     onTapFunc: Function
 
                 };
@@ -80,6 +79,10 @@
             connectedCallback() {
                 super.connectedCallback()
 
+            }
+            navigate(objid) {
+                window.history.pushState({}, null, '/author/' + this.objid);
+                window.dispatchEvent(new CustomEvent('location-changed'));
             }
 
         }

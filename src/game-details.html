@@ -74,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </luding-row>
       <luding-row>
         <template is="dom-repeat" items="[[data.gameAuthors]]" as="author">
-          <author-chip>
+          <author-chip objid="[[author.authorid]]">
             [[author.authorGivName]] [[author.authorLastName]]
             <div slot="caption">Spielautor</div>
           </author-chip>
@@ -85,7 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </luding-chip>
         </template>
         <template is="dom-repeat" items="[[data.gamePublishers]]" as="publisher">
-          <publisher-chip>
+          <publisher-chip objid="[[publisher.publisherid]]">
             [[publisher.publishername]]
           </publisher-chip>
         </template>

@@ -24,7 +24,7 @@
 
         </style>
 
-        <luding-chip icon="icons:account-balance"  type="publisher" objid="[[id]]">
+        <luding-chip icon="icons:account-balance"  on-tap="navigate" type="publisher" objid="[[id]]">
             <slot></slot>
             <div slot="caption">Verlag</div>
         </luding-chip>
@@ -55,8 +55,6 @@
             static get properties() {
                 return {
                     objid: Number,
-                    icon: { type: String, value: "" },
-                    onTapFunc: Function
 
                 };
             }
@@ -81,7 +79,10 @@
                 super.connectedCallback()
 
             }
-
+            navigate(objid) {
+                window.history.pushState({}, null, '/publisher/' + this.objid);
+                window.dispatchEvent(new CustomEvent('location-changed'));
+            }
         }
 
         window.customElements.define(PublisherChip.is, PublisherChip);
