@@ -73,7 +73,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       getBody(path) {
         const publisherid = path.match(/\d+/)[0]
-        console.log(publisherid)
+        console.log(path)
           return { query: `query { publisher(publisherid: ${publisherid}) { publisherid publishername publishergames {gameid gamename year type } }}` }
       }
       inc(idx) {

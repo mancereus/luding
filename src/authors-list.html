@@ -38,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <luding-search data="{{data}}" responseprop="authors" queryfunction="[[getBody]]"> </luding-search>
-    <iron-list items="[[data]]" as="item">
+    <iron-list id="list" items="[[data]]" as="item">
       <template>
         <luding-card item="[[item]]"  godetails="[[navigate]]" objid="authorid">
           <span slot="title">[[inc(index)]]. [[item.authorGivName]] [[item.authorLastName]]</span>
@@ -59,7 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return {
           data: {
             type: Array,
-            notify: true
+            notify: true,
+            observer: "refresh"
 
           }
 
@@ -83,6 +84,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       navigate(objid) {
         window.history.pushState({}, null, '/author/' + objid);
         window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+      refresh(event) {
+        this.$.list.fire('iron-resize')
       }
     }
 
