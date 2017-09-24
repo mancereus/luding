@@ -57,34 +57,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
       method="POST" body=[[body]] auto></iron-ajax>
     <paper-card style="padding: 3px; width: 100%">
-        <h3>[[data.gamename]]</h3>
-        <luding-row>
-          <template is="dom-repeat" items="[[data.gameSeries]]" as="serie"><serie-chip> [[serie.series]] </serie-chip> </template>
-          <template is="dom-repeat" items="[[data.gamePrizes]]" as="prize"><prize-chip>[[prize.prizename]]</prize-chip>  </template>
-        </luding-row>
-        <luding-row>
-          <template is="dom-repeat" items="[[data.gameAuthors]]" as="author">
-            <author-chip>
-              [[author.authorGivName]] [[author.authorLastName]]
-              <div slot="caption">Spielautor</div>
-            </author-chip>
-          </template>
-          <template is="dom-repeat" items="[[data.gamegameDesigners]]" as="designer">
-            <luding-chip icon="editor:border-color">
-              [[designer.authorGivName]] [[designer.authorLastName]]
-            </luding-chip>
-          </template>
-          <template is="dom-repeat" items="[[data.gamePublishers]]" as="publisher">
-            <publisher-chip>
-              [[publisher.publishername]]
-            </publisher-chip>
-          </template>
-        </luding-row>
-        <luding-row>
-          <info-chip caption="Spieleranzahl" icon="social:group">[[data.fromNoPlayers]] - [[data.toNoPlayers]]</info-chip> 
-          <info-chip caption="Spieldauer" icon="device:access-time">[[data.fromDuration]] - [[data.toDuration]]</info-chip> 
-          <info-chip caption="Spielalter" icon="image:filter-9-plus">[[data.fromAge]] - [[data.toAge]]</info-chip> 
-        </luding-row>
+      <luding-row>
+        <div style="max-width:400px">
+          <h3>[[data.gamename]]</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.l </p>
+        </div>
+         <img style="margin-left: 20px" src="https://dummyimage.com/250x340/234/aef.png&text=image" alt="">
+      </luding-row>
+      <luding-row>
+        <template is="dom-repeat" items="[[data.gameSeries]]" as="serie">
+          <serie-chip> [[serie.series]] </serie-chip>
+        </template>
+        <template is="dom-repeat" items="[[data.gamePrizes]]" as="prize">
+          <prize-chip>[[prize.prizename]]</prize-chip>
+        </template>
+      </luding-row>
+      <luding-row>
+        <template is="dom-repeat" items="[[data.gameAuthors]]" as="author">
+          <author-chip>
+            [[author.authorGivName]] [[author.authorLastName]]
+            <div slot="caption">Spielautor</div>
+          </author-chip>
+        </template>
+        <template is="dom-repeat" items="[[data.gamegameDesigners]]" as="designer">
+          <luding-chip icon="editor:border-color">
+            [[designer.authorGivName]] [[designer.authorLastName]]
+          </luding-chip>
+        </template>
+        <template is="dom-repeat" items="[[data.gamePublishers]]" as="publisher">
+          <publisher-chip>
+            [[publisher.publishername]]
+          </publisher-chip>
+        </template>
+      </luding-row>
+      <luding-row>
+        <info-chip caption="Spieleranzahl" icon="social:group">[[data.fromNoPlayers]] - [[data.toNoPlayers]]</info-chip>
+        <info-chip caption="Spieldauer" icon="device:access-time">[[data.fromDuration]] - [[data.toDuration]]</info-chip>
+        <info-chip caption="Spielalter" icon="image:filter-9-plus">[[data.fromAge]] - [[data.toAge]]</info-chip>
+      </luding-row>
 
     </paper-card>
     <div>

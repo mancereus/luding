@@ -21,9 +21,11 @@ polymer serve
 * Splash screen neu machen
 * swipe navigation left right (Gesture)
 * toast onTap action
-* refaktor lusign list
+* refaktor luding list
 * app-localstoreage /firebase
 * user auth
+* chip popout with link
+
+### bugs
 * sequelize mysql date (moment parse date)
 * bug iron list
-* (opt)rxjs für suche ohne button
