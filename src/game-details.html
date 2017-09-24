@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <serie-chip> [[serie.series]] </serie-chip>
         </template>
         <template is="dom-repeat" items="[[data.gamePrizes]]" as="prize">
-          <prize-chip>[[prize.prizename]]</prize-chip>
+          <prize-chip>[[prize.prize]]</prize-chip>
         </template>
       </luding-row>
       <luding-row>
@@ -128,7 +128,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       getBody(path) {
         const gameid = path.match(/\d+/)[0]
         console.log(gameid)
-        return { query: `query {game(gameid: ${gameid}){ gamename gameid comment year type status edition articleNumber mainTheme minorTheme fromNoPlayers toNoPlayers fromAge toAge fromDuration toDuration subtype gameSeries { seriesid  series } gamePrizes { prizesid  prizes } gameAuthors { authorid authorLastName authorGivName } gamePublishers { publisherid publishername country } }}` }
+        return { query: `query {game(gameid: ${gameid}){ gamename gameid comment year type status edition articleNumber mainTheme minorTheme fromNoPlayers toNoPlayers fromAge toAge fromDuration toDuration subtype gameSeries { seriesid  series } gamePrizes { prizeid  prize } gameAuthors { authorid authorLastName authorGivName } gamePublishers { publisherid publishername country } }}` }
       }
       inc(idx) {
         return idx + 1

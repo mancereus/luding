@@ -25,6 +25,8 @@ polymer serve
 * app-localstoreage /firebase
 * user auth
 * chip popout with link
+* country sprache anzeige
+
 
 ### bugs
 * sequelize mysql date (moment parse date)
