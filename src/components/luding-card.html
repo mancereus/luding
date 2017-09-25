@@ -69,7 +69,7 @@
                 }
             </style>
         </custom-style>
-        <app-localstorage-document key="[[item.authorid]]" data="{{item.active}}" debug></app-localstorage-document>
+        <app-localstorage-document id="storage" key="[[item.authorid]]" data="{{active}}" debug></app-localstorage-document>
         <paper-card class="rate">
             <div class="card-content">
                 <div class="rate-header">
@@ -79,7 +79,7 @@
                     <slot name="subtitle" class="subtitle"></slot>
                 </div>
                 <div class="rate-name">
-                    <paper-icon-button right icon="favorite" on-tap="toggle"></paper-icon-button>
+                    <paper-icon-button class$="[[active]]" right icon="favorite" on-tap="toggle"></paper-icon-button>
                     <paper-icon-button right icon="star" on-tap="toggle"></paper-icon-button>
                     <paper-icon-button right icon="icons:arrow-forward" on-tap="navigate"> </paper-icon-button>
                     <slot name="actions" class="actions"></slot>
@@ -123,7 +123,10 @@
                     },
                     godetails: {
                         type: Function,
-
+                    },
+                    active: {
+                        type: String,
+                        computed: 'isActive(item)'
                     }
                 };
             }
@@ -154,6 +157,9 @@
             }
             navigate(event) {
                 this.godetails(this.item[this.objid])
+            }
+            isActive(item) {
+                return "activex"
             }
         }
 

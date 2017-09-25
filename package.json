@@ -18,10 +18,9 @@
     "build": "webpack",
     "watch": "webpack --watch ",
     "prod": "node index.js",
+    "start": "webpack & node index.js",
     "dev": "webpack-dev-server --host 0.0.0.0",
-    "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
-    "test": "polymer test",
-    "test:integration": "polymer build # test that psk builds without error with the CLI"
+    "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore"
   },
   "dependencies": {
     "apollo-client": "^1.9.2",
