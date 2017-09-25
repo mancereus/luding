@@ -39,16 +39,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-    <app-location route={{route}} path={{path}} ></app-location>
-    <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
-      method="POST" body=[[body]] auto></iron-ajax>
-      <paper-card style="padding: 3px; width: 100%">
-        <h1>[[data.authorGivName]] [[data.authorLastName]]</h1>
-        <luding-row>
-          [[data.biographie]]
-        </luding-row>
-        <games-listfragment data="[[data.authorgames]]"></games-listfragment>
-      </paper-card>
+    <app-location route={{route}} path={{path}}></app-location>
+    <iron-ajax url="/api/graphql" on-response="handleResponse" content-type="application/json" handle-as="json" method="POST"
+      body=[[body]] auto></iron-ajax>
+    <paper-card style="padding: 3px; width: 100%">
+      <h1>[[data.authorGivName]] [[data.authorLastName]]</h1>
+      <luding-row>
+        [[data.biographie]]
+      </luding-row>
+      <games-listfragment data="[[data.authorgames]]"></games-listfragment>
+    </paper-card>
 
 
   </template>
@@ -78,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       getBody(path) {
         const authorid = path.match(/\d+/)[0]
         console.log(authorid)
-          return { query: `query { author(authorid: ${authorid}) { authorid authorGivName authorLastName biographie authorgames {gameid gamename year type } }}` }
+        return { query: `query { author(authorid: ${authorid}) { authorid authorGivName authorLastName biographie authorgames {gameid gamename year type } }}` }
       }
       inc(idx) {
         return idx + 1

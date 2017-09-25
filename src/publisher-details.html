@@ -38,9 +38,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 500px;
       }
     </style>
-    <app-location route={{route}} path={{path}} ></app-location>
-    <iron-ajax url="http://192.168.178.32:4000/graphql" on-response="handleResponse" content-type="application/json" handle-as="json"
-      method="POST" body=[[body]] auto></iron-ajax>
+    <app-location route={{route}} path={{path}}></app-location>
+    <iron-ajax url="/api/graphql" on-response="handleResponse" content-type="application/json" handle-as="json" method="POST"
+      body=[[body]] auto></iron-ajax>
 
     <h1>[[data.publishername]]</h1>
     <div>
@@ -74,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       getBody(path) {
         const publisherid = path.match(/\d+/)[0]
         console.log(path)
-          return { query: `query { publisher(publisherid: ${publisherid}) { publisherid publishername publishergames {gameid gamename year type } }}` }
+        return { query: `query { publisher(publisherid: ${publisherid}) { publisherid publishername publishergames {gameid gamename year type } }}` }
       }
       inc(idx) {
         return idx + 1

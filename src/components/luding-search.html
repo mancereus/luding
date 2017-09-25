@@ -33,8 +33,8 @@
             </div>
         </paper-input>
 
-        <iron-ajax id="ajax" loading="{{loading}}" url="http://192.168.178.32:4000/graphql" debounce-duration="300" on-response="handleResponse"
-            content-type="application/json" handle-as="json" method="POST" body=[[query]]></iron-ajax>
+        <iron-ajax id="ajax" loading="{{loading}}" url="/api/graphql" debounce-duration="300" on-response="handleResponse" content-type="application/json"
+            handle-as="json" method="POST" body=[[query]]></iron-ajax>
 
 
 
