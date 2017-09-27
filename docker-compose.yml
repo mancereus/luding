@@ -1,0 +1,38 @@
+version: '2'
+services:
+  client:
+    image: node:8.5
+    user: "1000"
+#    restart: always
+    mem_limit: 2G
+    volumes:
+      - /opt/docker/${CONTAINER}/luding-client:/usr/src/app
+    command: 
+      - bash -c 'cd /usr/src/app && npm start'
+#    links:
+#     - "server"
+    ports:
+     - 15217:8080
+    environment:
+     - BACKEND=server:4000
+#  server:
+#    image: node:8.5
+#    restart: always
+#    mem_limit: 2G
+#    volumes:
+#      - /opt/docker/${CONTAINER}/luding-server:/usr/src/app
+#    command: bash -c 'cd /usr/src/app && npm start'
+#    links:
+#     - "mysql"
+#    environment:
+#     - MYSQL=mysql://root:root@mysql:3306/luding
+#  mysql:
+#    image: mysql:8
+#    restart: always
+#    mem_limit: 2G
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#    volumes:
+#     - /opt/docker/${CONTAINER}/mysql:/var/lib/mysql
+#    ports:
+#     - 15218:3306

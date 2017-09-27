@@ -16,6 +16,13 @@ Serve the App:
 polymer serve
 ```
 
+## Docker
+
+docker build -t mancereus/luding-client .
+docker run -p 49160:8080 mancereus/luding-client
+
+http://localhost:41960
+
 ### Tasks
 
 * Splash screen neu machen

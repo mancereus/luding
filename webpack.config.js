@@ -1,36 +1,39 @@
-'use strict';
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+"use strict";
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 /* global __dirname module require*/
 /* eslint comma-dangle: ["error", "never"] */
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: ['./src/luding-app.html'],
+  entry: ["./src/luding-app.html"],
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'public/dist'),
-    publicPath: 'dist/'
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "public/dist"),
+    publicPath: "dist/"
   },
   resolve: {
-    modules: ['node_modules', 'bower_components'],
-    descriptionFiles: ['package.json']
+    modules: ["node_modules", "bower_components"],
+    descriptionFiles: ["package.json"]
   },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   devServer: {
-    contentBase: './public/',
+    contentBase: "./public/",
     hot: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      "/api": { target: "http://localhost:4000" }
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
-      filename: 'public/index.html',
-      template: './index.tmpl',
+      filename: "public/index.html",
+      template: "./index.tmpl",
       // minify: process.env.debug ? {} : htmlMinifierOptions,
       // jenkinsBuild: process.env.BUILD_TAG || 'local build',
       generatedAt: new Date()
-  }),
+    }),
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
@@ -39,14 +42,14 @@ module.exports = {
         test: /\.html$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              presets: ['env'],
-              plugins: ['syntax-dynamic-import']
+              presets: ["env"],
+              plugins: ["syntax-dynamic-import"]
             }
           },
           {
-            loader: 'polymer-webpack-loader'
+            loader: "polymer-webpack-loader"
           }
         ]
       },
@@ -54,9 +57,9 @@ module.exports = {
         test: /\.js$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              presets: ['env']
+              presets: ["env"]
             }
           }
         ]
