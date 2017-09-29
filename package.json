@@ -18,8 +18,8 @@
     "build": "webpack",
     "watch": "webpack --watch ",
     "prod": "node index.js",
-    "install": "bower install",
-    "start": "npm i && bower i && webpack && node server.js",
+    "bowerinstall": "bower install",
+    "start": "node server.js",
     "dev": "webpack-dev-server --host 0.0.0.0",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore"
   },
